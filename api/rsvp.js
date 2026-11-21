@@ -96,13 +96,15 @@ module.exports = async (req, res) => {
     const name = typeof b.name === 'string' ? b.name.trim().replace(/\s+/gu, ' ') : '';
     const email = typeof b.email === 'string' ? b.email.trim().toLowerCase() : '';
     const phone = typeof b.phone === 'string' && b.phone.length <= 32 ? phoneDigits(b.phone).replace(/[\s().-]/g, '') : '';
-    if (name.length > 100 || name.split(' ').filter(s => /\p{L}/u.test(s)).length < 2 || email.length > 254 || !/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(email) || !/^\+?\d{7,15}$/.test(phone) || !['yes', 'no'].includes(b.attendance) || (b.attendance === 'yes' && (!Number.isInteger(b.guests) || b.guests < 1 || b.guests > 4))) return reply(400, {error: 'invalid'});
+    if (name.length > 100 || name.split(' ').filter(s => /\p{L}/u.test(s)).length < 2 || email.length > 254 || (email && !/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(email)) || !/^\+?\d{7,15}$/.test(phone) || !['yes', 'no'].includes(b.attendance) || (b.attendance === 'yes' && (!Number.isInteger(b.guests) || b.guests < 1 || b.guests > 4))) return reply(400, {error: 'invalid'});
 
-    const id = hash(email);
+    const identity = (n,p) => n.normalize('NFKC').toLowerCase() + '\u0000' + p.replace(/^(\+|00)/,'');
+    const key = identity(name,phone);
+    const id = hash('rsvp:' + key);
     const row = {id, name, email, phone, attendance: b.attendance, guests: b.attendance === 'yes' ? b.guests : 0, updated: new Date().toISOString()};
     const out = await mutate(rows => {
       // A public submission never overwrites an existing reply.
-      if (rows.some(r => r.id === id)) return {done: true, status: 409};
+      if (rows.some(r => r.id === id || identity(r.name,r.phone) === key || (email && r.email === email))) return {done: true, status: 409};
       if (rows.length >= 2000) return {done: true, status: 503};
       return {rows: [...rows, row], status: 201};
     });

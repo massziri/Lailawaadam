@@ -8,14 +8,30 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const music = new Audio('assets/musique-andalouse.mp3');
 music.loop = true;
 music.volume = 0.55;
-music.preload = 'auto';
+music.preload = 'none';
+const soundToggle = document.querySelector('#sound-toggle');
+let soundDisabled = false;
+function updateSoundToggle() {
+  soundToggle.setAttribute('aria-pressed', String(!music.paused && !music.muted));
+}
+for (const event of ['playing', 'pause', 'volumechange', 'error']) music.addEventListener(event, updateSoundToggle);
+soundToggle.hidden = false;
+function playMusic() {
+  music.muted = false;
+  music.play().catch(updateSoundToggle);
+}
+soundToggle.addEventListener('click', () => {
+  if (music.paused || music.muted) { soundDisabled = false; playMusic(); }
+  else { soundDisabled = true; music.muted = true; music.pause(); }
+  updateSoundToggle();
+});
 let revealTimer;
 
 function openInvitation(event) {
   if (event) event.preventDefault();
   if (cover.classList.contains('is-open')) return;
   cover.classList.add('is-open');
-  music.play().catch(() => {}); // la musique est un bonus : l'ouverture ne dépend pas d'elle
+  if (!soundDisabled) playMusic();
   clearTimeout(revealTimer);
   revealTimer = setTimeout(() => {
     invitation.focus({preventScroll: true});
@@ -84,8 +100,8 @@ form.addEventListener('submit', async event => {
     const r = await fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json','X-RSVP-Request':'1'},body:JSON.stringify({action:'submit',name:name.value,phone:phone.value,email:email.value,attendance:attendance.value,guests:Number(guests.value)}),signal:AbortSignal.timeout(12000)});
     const data = await r.json();
     if (r.status === 201 && data.ok) {form.reset();updateGuests();message.textContent='تم تسجيل ردّكم. شكرًا لكم!';}
-    else if(r.status === 400) message.textContent='يرجى التحقّق من الاسم الكامل ورقم الهاتف والبريد الإلكتروني والاختيار.';
-    else if(r.status === 409) message.textContent='سبق تسجيل ردّ بهذا البريد الإلكتروني. لتعديله، يرجى التواصل مع منظّمي الحفل.';
+    else if(r.status === 400) message.textContent='يرجى التحقّق من الاسم الكامل ورقم الهاتف والاختيار وصحّة البريد الإلكتروني إن أُدخل.';
+    else if(r.status === 409) message.textContent='سبق تسجيل ردّ بهذا الاسم ورقم الهاتف، أو بهذا البريد الإلكتروني. لتعديله، يرجى التواصل مع منظّمي الحفل.';
     else if(r.status === 429) message.textContent='محاولات كثيرة. يرجى المحاولة لاحقًا.';
     else throw new Error();
   } catch {message.textContent='تعذّر تسجيل الردّ الآن. يرجى المحاولة لاحقًا.';}

@@ -13,7 +13,7 @@ function render() {
   get('total').textContent = `الردود: ${rows.length} · التأكيدات: ${yes.length} · الاعتذارات: ${rows.length-yes.length} · عدد الحاضرين: ${yes.reduce((n,r)=>n+r.guests,0)}`;
   for (const row of rows.filter(r=>filter==='all'||r.attendance===filter)) {
     const tr = document.createElement('tr');
-    for (const [i,v] of [row.name,row.phone,row.email,row.attendance==='yes'?'حضور':'اعتذار',row.guests,new Date(row.updated).toLocaleString('ar-MA',{timeZone:'Africa/Casablanca'})].entries()) {
+    for (const [i,v] of [row.name,row.phone,row.email || "—",row.attendance==='yes'?'حضور':'اعتذار',row.guests,new Date(row.updated).toLocaleString('ar-MA',{timeZone:'Africa/Casablanca'})].entries()) {
       const td = tr.insertCell(); td.textContent = v; if(i===1||i===2) td.dir='ltr';
     }
     const remove = document.createElement('button'); remove.type='button'; remove.textContent='حذف';
