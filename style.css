@@ -14,13 +14,18 @@ h3{font-size:clamp(23px,2.9vw,31px)}
 .skip:focus{top:1rem}
 
 /* ---------- full-screen door cover ---------- */
-.cover{min-height:100svh;position:relative;display:grid;place-items:center;text-align:center;color:#fff6e0;isolation:isolate;overflow:hidden;padding:0;background:#0f1a14}
-.door-layer{position:absolute;inset:0;background-position:center;background-size:cover;background-repeat:no-repeat;transition:opacity 1.3s ease,transform 7s cubic-bezier(.22,.6,.3,1);will-change:opacity,transform}
-.door-layer.closed{background-image:url('assets/porte-fermee.jpg')}
-.door-layer.open{background-image:url('assets/porte-ouverte.jpg');opacity:0;transform:scale(1.045)}
-.is-open .door-layer.open{opacity:1;transform:scale(1.075)}
-.is-open .door-layer.closed{opacity:0}
-.cover-shade{position:absolute;inset:0;background:linear-gradient(180deg,#0e1a13cc,#12201973 34%,#101c16a1 62%,#0d1811e8)}
+.cover{min-height:100svh;position:relative;display:grid;place-items:center;text-align:center;color:#fff6e0;isolation:isolate;overflow:hidden;padding:0;background:#0f1a14;perspective:1400px}
+.courtyard{position:absolute;inset:0;background:url('assets/porte-ouverte.jpg') center/cover no-repeat;transform:scale(1.02);transition:transform 3.4s cubic-bezier(.24,.6,.3,1)}
+.is-open .courtyard{transform:scale(1.09)}
+.door-half{position:absolute;top:0;bottom:0;width:50.3%;overflow:hidden;z-index:2;will-change:transform;transition:transform 3s cubic-bezier(.45,.05,.3,1)}
+.door-half .door-skin{position:absolute;inset:0;background-image:url('assets/porte-fermee.jpg');background-size:200% 100%;background-repeat:no-repeat}
+.door-half.left{left:0;transform-origin:left center;box-shadow:12px 0 34px #0b151055}
+.door-half.left .door-skin{background-position:0 0}
+.door-half.right{right:0;transform-origin:right center;box-shadow:-12px 0 34px #0b151055}
+.door-half.right .door-skin{background-position:100% 0}
+.is-open .door-half.left{transform:rotateY(-102deg)}
+.is-open .door-half.right{transform:rotateY(102deg)}
+.cover-shade{position:absolute;inset:0;z-index:3;background:linear-gradient(180deg,#0e1a1330,#12201930 34%,#101c1630 62%,#0d18113d);transition:background 1.5s;pointer-events:none}
 .cover-frame{position:absolute;inset:18px;border:1px solid #f4d79d55;pointer-events:none;z-index:3}
 .top,.bottom{position:absolute;inset-inline:42px;display:flex;justify-content:space-between;align-items:center;color:#fff0cb;font-size:16px;letter-spacing:.02em;z-index:4;text-shadow:0 1px 8px #0d1712}
 .top{top:30px}.bottom{bottom:30px}
@@ -110,6 +115,7 @@ main:focus{outline:none}
   .cover-frame{inset:11px}
   .top,.bottom{inset-inline:22px}.top{top:20px}.bottom{bottom:20px}
   .door-hit{padding-bottom:12%}
+  .door-half{width:50.6%}
 }
 @media(max-width:470px){
   .facts{grid-template-columns:1fr}

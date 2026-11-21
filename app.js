@@ -8,21 +8,22 @@ const openButton = document.querySelector('#open');
 const replayLink = document.querySelector('#replay');
 const invitation = document.querySelector('#invitation');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const creak = new Audio('assets/son-porte.mp3');
-creak.preload = 'auto';
+const music = new Audio('assets/musique-andalouse.mp3');
+music.loop = true;
+music.volume = 0.55;
+music.preload = 'auto';
 let revealTimer;
 
 function openInvitation(event) {
   if (event) event.preventDefault();
   if (cover.classList.contains('is-open')) return;
   cover.classList.add('is-open');
-  creak.currentTime = 0;
-  creak.play().catch(() => {}); // le son est un bonus : l'ouverture ne dépend pas de lui
+  music.play().catch(() => {}); // la musique est un bonus : l'ouverture ne dépend pas d'elle
   clearTimeout(revealTimer);
   revealTimer = setTimeout(() => {
     invitation.focus({preventScroll: true});
     invitation.scrollIntoView();
-  }, reducedMotion.matches ? 0 : 950);
+  }, reducedMotion.matches ? 0 : 2900);
 }
 
 openButton.addEventListener('click', openInvitation);
