@@ -139,5 +139,6 @@ main:focus{outline:none}
 .sound-toggle{position:fixed;z-index:12;inset-inline-start:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));display:inline-flex;align-items:center;gap:.45rem;padding:0 .8rem;min-height:44px;border:1px solid #e7c78e99;border-radius:999px;background:#13251df5;color:#fff0cb;font:inherit;cursor:pointer;box-shadow:0 3px 12px #0004}
 .sound-toggle:focus-visible{outline:3px solid #e7c78e;outline-offset:3px}
 .sound-toggle[aria-pressed="false"] .sound-waves,.sound-toggle[aria-pressed="true"] .sound-cross{display:none}
-.music-credit{position:absolute;z-index:7;bottom:5px;inset-inline:0;width:max-content;max-width:95%;margin:auto;color:#fff0cb;background:#17160ee6;padding:0 6px;font-size:12px}
-@media(max-width:640px){.music-credit{bottom:64px;max-width:80%}}
+.music-credit{margin-top:14px;font-size:15px;color:#8d7a55}
+.music-credit a{color:#8d7a55}
+@media(max-width:640px){.music-credit{max-width:80%;margin-inline:auto;line-height:1.6}}
