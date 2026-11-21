@@ -1,7 +1,4 @@
 'use strict';
-// Facultatif : numéro WhatsApp au format international, chiffres uniquement.
-// Laisser vide (''), le formulaire reste alors en mode aperçu sans envoi.
-const whatsappNumber = '';
 
 const cover = document.querySelector('#cover');
 const openButton = document.querySelector('#open');
@@ -69,48 +66,28 @@ calendarButton.addEventListener('click', () => {
   setTimeout(() => URL.revokeObjectURL(url), 2000);
 });
 
-// Formulaire de présence.
 const form = document.querySelector('#rsvp');
-const nameField = document.querySelector('#name');
-const attendance = document.querySelector('#attendance');
-const guests = document.querySelector('#guests');
-const status = document.querySelector('#status');
-const button = document.querySelector('#rsvp-button');
-const canSend = /^[1-9]\d{7,14}$/.test(whatsappNumber);
-if (canSend) {
-  button.textContent = 'متابعة عبر واتساب';
-  document.querySelector('#rsvp-mode').textContent = 'سيُفتح واتساب مع نص الردّ. لا يُرسل الردّ إلا بعد الضغط على زر الإرسال في واتساب.';
-}
-form.addEventListener('input', () => {
-  nameField.setCustomValidity('');
-  status.hidden = true;
-});
-attendance.addEventListener('change', () => { guests.disabled = attendance.value === 'no'; });
-form.addEventListener('submit', (event) => {
+const send = document.querySelector('#rsvp-button');
+const message = document.querySelector('#status');
+const presence = form.elements.attendance;
+function updateGuests(){form.elements.guests.disabled = presence.value === 'no';}
+presence.addEventListener('change',updateGuests);
+updateGuests();
+send.disabled = false;
+form.addEventListener('submit', async event => {
   event.preventDefault();
-  const name = nameField.value.trim();
-  if (!name) {
-    nameField.setCustomValidity('يرجى كتابة الاسم الكامل.');
-    nameField.reportValidity();
-    return;
-  }
-  if (!attendance.value) {
-    attendance.setCustomValidity('يرجى اختيار الإجابة.');
-    attendance.reportValidity();
-    return;
-  }
-  attendance.setCustomValidity('');
-  const going = attendance.value === 'yes';
-  const guestCount = Number(guests.value).toLocaleString('ar-MA-u-nu-arab');
-  const response = going
-    ? `سأحضر حفل الزفاف. عدد الحاضرين بمن فيهم أنا: ${guestCount}.`
-    : 'أعتذر عن حضور حفل الزفاف.';
-  if (canSend) {
-    const url = new URL('https://wa.me/' + whatsappNumber);
-    url.searchParams.set('text', `مرحبًا، معكم ${name}. ${response}`);
-    window.location.assign(url.toString());
-  } else {
-    status.textContent = `معاينة الردّ — ${name}: ${response} لم يُرسل شيء.`;
-    status.hidden = false;
-  }
+  send.disabled = true;
+  message.hidden = false;
+  message.textContent = 'جارٍ إرسال الردّ…';
+  try {
+    const {name,phone,email,attendance,guests} = form.elements;
+    const r = await fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json','X-RSVP-Request':'1'},body:JSON.stringify({action:'submit',name:name.value,phone:phone.value,email:email.value,attendance:attendance.value,guests:Number(guests.value)}),signal:AbortSignal.timeout(12000)});
+    const data = await r.json();
+    if (r.status === 201 && data.ok) {form.reset();updateGuests();message.textContent='تم تسجيل ردّكم. شكرًا لكم!';}
+    else if(r.status === 400) message.textContent='يرجى التحقّق من الاسم الكامل ورقم الهاتف والبريد الإلكتروني والاختيار.';
+    else if(r.status === 409) message.textContent='سبق تسجيل ردّ بهذا البريد الإلكتروني. لتعديله، يرجى التواصل مع منظّمي الحفل.';
+    else if(r.status === 429) message.textContent='محاولات كثيرة. يرجى المحاولة لاحقًا.';
+    else throw new Error();
+  } catch {message.textContent='تعذّر تسجيل الردّ الآن. يرجى المحاولة لاحقًا.';}
+  finally {send.disabled = false;}
 });

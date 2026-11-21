@@ -36,6 +36,7 @@
     <span class="open-hint">اضغطوا لفتح الباب <i class="chev" aria-hidden="true">✦</i></span>
   </button>
 
+  <a class="music-credit" href="https://freemusicarchive.org/music/timtaj/single/arabic-oud/" target="_blank" rel="noopener">الموسيقى: Arabic Oud — TimTaj · CC BY-NC-ND 4.0</a>
   <div class="bottom"><span>دار الياسمين</span><span>المغرب</span></div>
 </header>
 
@@ -43,6 +44,7 @@
   <section class="welcome wrap">
     <div class="rule" aria-hidden="true">✦</div>
     <p class="eyebrow">بكل المحبة</p>
+    <figure class="verse"><blockquote>«وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً»</blockquote><figcaption>سورة الروم · الآية ٢١ (مقتطف)</figcaption></figure>
     <h2>تكتمل فرحتنا بحضوركم</h2>
     <p>يسرّنا أن ندعوكم لمشاركتنا فرحة زفافنا في أمسية تجمع الأحبّة على ضوء الفوانيس وبين عبق الياسمين.</p>
     <div class="facts">
@@ -51,7 +53,6 @@
       <div><small>المكان</small><strong>دار الياسمين، تطوان</strong></div>
     </div>
     <p class="countdown" id="countdown" aria-live="polite"></p>
-    <p class="sample">دعوة نموذجية: الأسماء والتاريخ والمكان قابلة للتعديل.</p>
   </section>
 
   <section class="gallery wrap" aria-labelledby="gallery-title">
@@ -62,7 +63,6 @@
     </div>
     <figure class="garden"><img src="assets/jardin.jpg" width="1100" height="733" alt="نافورة في حديقة تطلّ على أقواس أندلسية" loading="lazy" decoding="async"><figcaption>حديقة النوافير</figcaption></figure>
     <figure class="fountain"><img src="assets/fontaine.jpg" width="760" height="1165" alt="حوض ماء طويل بين صفّين من الأشجار" loading="lazy" decoding="async"><figcaption>ممرّ الياسمين</figcaption></figure>
-    <p class="photo-note">الصور للإلهام ولا تمثّل موقع الحفل.</p>
   </section>
 
   <section class="program" aria-labelledby="program-title">
@@ -87,21 +87,22 @@
     <p class="eyebrow">بانتظار لقائكم</p>
     <h2 id="rsvp-title">تأكيد الحضور</h2>
     <p>يرجى الردّ قبل ٥ يونيو ٢٠٢٧.</p>
-    <form id="rsvp" novalidate>
+    <form id="rsvp" method="post" action="/api/rsvp" accept-charset="UTF-8">
       <label for="name">الاسم الكامل</label>
       <input id="name" name="name" autocomplete="name" maxlength="100" required placeholder="اكتبوا اسمكم هنا">
+      <div class="form-row"><div><label for="phone">رقم الهاتف</label><input id="phone" name="phone" type="tel" dir="ltr" autocomplete="tel" maxlength="32" required></div><div><label for="email">البريد الإلكتروني</label><input id="email" name="email" type="email" dir="ltr" autocomplete="email" maxlength="254" required></div></div>
+      <p class="sample">تُستخدم بيانات الاتصال لتنظيم الحفل فقط، ولا تظهر للضيوف الآخرين.</p>
       <div class="form-row">
         <div><label for="attendance">هل ستتمكنون من الحضور؟</label>
-          <select id="attendance" required>
+          <select id="attendance" name="attendance" required>
             <option value="">اختاروا الإجابة</option>
             <option value="yes">نعم، بكل سرور</option>
             <option value="no">أعتذر عن الحضور</option>
           </select></div>
         <div><label for="guests">عدد الحاضرين</label>
-          <select id="guests"><option value="1">١</option><option value="2">٢</option><option value="3">٣</option><option value="4">٤</option></select></div>
+          <select id="guests" name="guests"><option value="1">١</option><option value="2">٢</option><option value="3">٣</option><option value="4">٤</option></select></div>
       </div>
-      <button class="btn dark" id="rsvp-button" type="submit">معاينة الردّ</button>
-      <p id="rsvp-mode" class="sample">هذا النموذج للمعاينة فقط. لا يُرسل أيّ ردّ.</p>
+      <button class="btn dark" id="rsvp-button" type="submit" disabled>إرسال الردّ</button>
       <p id="status" role="status" hidden></p>
       <noscript><p>يرجى تفعيل جافاسكريبت لاستخدام النموذج.</p></noscript>
     </form>
@@ -112,16 +113,6 @@
   <div class="rule" aria-hidden="true">✦</div>
   <p class="sign">ليلى وآدم</p>
   <a href="#cover" id="replay">العودة إلى الغلاف ↑</a>
-  <details>
-    <summary>مصادر الصور والخط</summary>
-    <span>صورتا البابين مولّدتان بالذكاء الاصطناعي خصيصًا لهذه الدعوة</span>
-    <a href="https://pxhere.com/en/photo/145939" target="_blank" rel="noopener">الفناء — PxHere</a>
-    <a href="https://picryl.com/media/alhambra-source-andalusia-7d73c8" target="_blank" rel="noopener">الحديقة — PICRYL</a>
-    <a href="https://www.rawpixel.com/image/3340602/free-photo-image-garden-fountain" target="_blank" rel="noopener">الممرّ — Rawpixel</a>
-    <span>صورتا البابين مولّدتان بالذكاء الاصطناعي خصيصًا لهذه الدعوة</span>
-    <span>الموسيقى: «Arabic Oud» لـ TimTaj — <a href="https://freemusicarchive.org/music/timtaj/single/arabic-oud/" target="_blank" rel="noopener">رخصة CC BY-NC-ND 4.0</a></span>
-    <span>الخط: Amiri (رخصة OFL)</span>
-  </details>
 </footer>
 </body>
 </html>

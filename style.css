@@ -133,3 +133,4 @@ main:focus{outline:none}
 @media(prefers-reduced-motion:reduce){
   *,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+.verse{max-width:690px;margin:24px auto 18px;padding:17px 15px;border-block:1px solid #d9c8ae;color:#62482d}.verse blockquote{font-size:clamp(23px,3.8vw,32px);line-height:1.9;margin:0}.verse figcaption{font-size:16px;margin-top:5px}.music-credit{position:absolute;z-index:7;bottom:5px;inset-inline:0;width:max-content;max-width:95%;margin:auto;color:#fff0cb;background:#17160ee6;padding:0 6px;font-size:12px}.rsvp button:disabled{opacity:.65;cursor:wait}
