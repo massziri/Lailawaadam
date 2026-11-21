@@ -10,57 +10,46 @@ h1,h2,h3{line-height:1.22;font-weight:400}
 h2{font-size:clamp(34px,5.6vw,62px)}
 h3{font-size:clamp(23px,2.9vw,31px)}
 :focus-visible{outline:3px solid #b4733b;outline-offset:5px}
-.skip{position:absolute;z-index:20;inset-inline-start:1rem;top:-6rem;background:#fff;color:#13251d;padding:8px 20px}
+.skip{position:absolute;z-index:30;inset-inline-start:1rem;top:-6rem;background:#fff;color:#13251d;padding:8px 20px}
 .skip:focus{top:1rem}
 
-/* ---------- cover ---------- */
-.cover{min-height:100svh;position:relative;display:grid;place-items:center;text-align:center;color:#fff6e0;isolation:isolate;padding:84px 24px 74px;overflow:hidden;background:#12211a}
-.cover-bg{position:absolute;inset:0;z-index:-2;background:url('assets/patio.jpg') center 45%/cover no-repeat;transform:scale(1.02)}
-.cover:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#0f1d16d9,#17291c8c 30%,#122218a6 58%,#0f1b15f2),radial-gradient(ellipse at 50% 45%,#2a3a2a33,#0d1712b3)}
-.cover-frame{position:absolute;inset:18px;border:1px solid #f4d79d66;pointer-events:none}
-.top,.bottom{position:absolute;inset-inline:42px;display:flex;justify-content:space-between;align-items:center;color:#fff0cb;font-size:16px;letter-spacing:.02em}
+/* ---------- full-screen door cover ---------- */
+.cover{min-height:100svh;position:relative;display:grid;place-items:center;text-align:center;color:#fff6e0;isolation:isolate;overflow:hidden;padding:0;background:#0f1a14}
+.door-layer{position:absolute;inset:0;background-position:center;background-size:cover;background-repeat:no-repeat;transition:opacity 1.3s ease,transform 7s cubic-bezier(.22,.6,.3,1);will-change:opacity,transform}
+.door-layer.closed{background-image:url('assets/porte-fermee.jpg')}
+.door-layer.open{background-image:url('assets/porte-ouverte.jpg');opacity:0;transform:scale(1.045)}
+.is-open .door-layer.open{opacity:1;transform:scale(1.075)}
+.is-open .door-layer.closed{opacity:0}
+.cover-shade{position:absolute;inset:0;background:linear-gradient(180deg,#0e1a13cc,#12201973 34%,#101c16a1 62%,#0d1811e8)}
+.cover-frame{position:absolute;inset:18px;border:1px solid #f4d79d55;pointer-events:none;z-index:3}
+.top,.bottom{position:absolute;inset-inline:42px;display:flex;justify-content:space-between;align-items:center;color:#fff0cb;font-size:16px;letter-spacing:.02em;z-index:4;text-shadow:0 1px 8px #0d1712}
 .top{top:30px}.bottom{bottom:30px}
 .top i{display:inline-block;width:4px;height:4px;background:#e4be77;vertical-align:middle;margin-inline:7px;transform:rotate(45deg)}
-.monogram{border:1px solid #e4be779e;border-radius:50%;display:grid;place-items:center;width:46px;height:46px}
-.cover-content{position:relative;width:min(520px,100%);display:flex;flex-direction:column;align-items:center;gap:2px}
-
-/* ---------- the real wooden gate ---------- */
-.gate{position:relative;width:auto;height:clamp(230px,32vh,400px);aspect-ratio:780/1393;margin:18px auto 14px;perspective:900px;cursor:pointer;border:0;padding:0;background:none;-webkit-tap-highlight-color:transparent;isolation:isolate}
-.gate:before{content:'';position:absolute;inset:-13px -13px -8px;border-radius:50% 50% 3px 3px/26% 26% 3px 3px;border:1px solid #e8ce9a80;background:linear-gradient(180deg,#2c3a2b4d,#101a1480);box-shadow:0 20px 60px #0b1510a6,inset 0 0 22px #0f1a1459;z-index:-1}
-.gate:after{content:'';position:absolute;inset:0;border-radius:2px;box-shadow:inset 0 0 26px #0d1611a1,inset 0 -14px 20px #0d161180;pointer-events:none;z-index:4}
-.gate-light{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 62%,#f7e2b6,#d7b077 38%,#8d6a3d 68%,#2d2417);overflow:hidden}
-.gate-light span{font-size:20px;color:#43301c;opacity:.72;transform:translateY(26px);letter-spacing:.04em}
-.leaf{position:absolute;top:0;bottom:0;width:50%;overflow:hidden;background-image:url('assets/porte.jpg');background-size:200% 100%;background-repeat:no-repeat;transition:transform 1.05s cubic-bezier(.32,.72,.16,1),opacity 1.05s linear;z-index:3;will-change:transform}
-.leaf[data-side="left"]{left:0;background-position:0 0;transform-origin:left center}
-.leaf[data-side="right"]{right:0;background-position:100% 0;transform-origin:right center}
-.gate-ring{position:absolute;top:47%;left:50%;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f4e2bc,#7a6748 70%,#2b2418);box-shadow:0 1px 3px #00000080;z-index:5;transition:opacity .4s}
-.is-open .leaf[data-side="left"]{transform:rotateY(-108deg);opacity:.18}
-.is-open .leaf[data-side="right"]{transform:rotateY(108deg);opacity:.18}
-.is-open .gate-ring{opacity:0}
-.gate:hover .leaf,.gate:focus-visible .leaf{filter:brightness(1.06)}
-.eyebrow{font-size:17px;color:#81522f;letter-spacing:.06em;margin-bottom:10px}
-.cover .eyebrow{color:#f0cd8f;margin-bottom:4px}
-.cover h1{font-size:clamp(52px,9vw,104px);line-height:1.1;text-shadow:0 3px 22px #0d1712}
+.monogram{border:1px solid #e4be779e;border-radius:50%;display:grid;place-items:center;width:46px;height:46px;background:#12211a66}
+.cover-content{position:relative;z-index:2;padding:0 24px;text-shadow:0 2px 18px #0d1712}
+.eyebrow{font-size:18px;color:#81522f;letter-spacing:.06em}
+.cover .eyebrow{color:#f2d096;margin-bottom:8px}
+.cover h1{font-size:clamp(54px,9vw,108px);line-height:1.12}
 .cover h1 em{color:#eacb98;font-weight:400;font-style:normal;font-size:.62em}
-.intro{color:#fff2d4;font-size:clamp(18px,2.6vw,26px)}
-.cover-date{color:#f5e6c5;margin-top:4px}
+.intro{color:#fff2d4;font-size:clamp(19px,2.6vw,27px)}
+.cover-date{color:#f5e6c5;margin-top:6px}
 .cover-date b{color:#e1ba77;margin-inline:6px}
-.hint{font-size:15px;color:#e6d3ad;opacity:.85;margin-top:6px}
-.chev{display:inline-block;transition:transform .3s}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:11px;min-height:49px;padding:7px 26px;border:1px solid transparent;border-radius:999px;text-decoration:none;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
-.primary{background:#ecd29c;color:#1e2d25;margin-top:12px}
-.primary:hover{background:#fff0cb}
-.dark{background:#263e30;color:#fff5df}
-.dark:hover{background:#395241}
-.dark:disabled{opacity:.55;cursor:default}
-.ghost{border-color:#e3c89480;color:#f4e3c4;background:#ffffff0d}
-.ghost:hover{background:#ffffff1f}
-.cover .btn.primary:focus-visible{outline-color:#f7e2b6}
+.door-hit{position:absolute;inset:0;z-index:5;display:grid;align-items:end;justify-items:center;padding-bottom:9%;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .5s}
+.open-hint{display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:6px 26px;border:1px solid #efd6a1;border-radius:999px;background:#1322194d;backdrop-filter:blur(3px);color:#ffe9bd;font-size:clamp(18px,2.4vw,23px);animation:pulse 2.2s ease-in-out infinite}
+.chev{font-style:normal;font-size:15px}
+@keyframes pulse{0%,100%{opacity:.85}50%{opacity:1}}
+.is-open .door-hit{opacity:0;pointer-events:none}
+.is-open .open-hint{animation:none}
 
 /* ---------- shared ---------- */
 .wrap{width:min(1050px,calc(100% - 48px));margin-inline:auto}
 .rule{display:flex;justify-content:center;align-items:center;gap:12px;color:#a47445;font-size:17px;margin:19px auto}
 .rule:before,.rule:after{content:'';width:44px;height:1px;background:currentColor;opacity:.65}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:11px;min-height:49px;padding:7px 26px;border:1px solid transparent;border-radius:999px;text-decoration:none;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.dark{background:#263e30;color:#fff5df}
+.dark:hover{background:#395241}
+.ghost{border-color:#e3c89480;color:#f4e3c4;background:#ffffff0d}
+.ghost:hover{background:#ffffff1f}
 
 /* ---------- welcome ---------- */
 .welcome{text-align:center;padding:82px 0 74px}
@@ -109,8 +98,8 @@ h3{font-size:clamp(23px,2.9vw,31px)}
 .footer{border-top:1px solid #ddcbb1;text-align:center;padding:26px 16px 34px;color:#734c2d;font-size:16px}
 .sign{font-size:34px;color:#263e30}
 .footer details{margin-top:12px}
-.footer details a{display:block;font-size:15px}
-.footer details span{display:block;font-size:15px;opacity:.8}
+.footer details a,.footer details span{display:block;font-size:15px}
+.footer details span{opacity:.8}
 .footer summary{cursor:pointer}
 main:focus{outline:none}
 
@@ -120,8 +109,7 @@ main:focus{outline:none}
   .garden img{height:190px}.fountain img{height:245px}
   .cover-frame{inset:11px}
   .top,.bottom{inset-inline:22px}.top{top:20px}.bottom{bottom:20px}
-  .cover{padding:70px 20px 62px}
-  .gate{height:clamp(200px,27vh,300px);margin:12px auto 10px}
+  .door-hit{padding-bottom:12%}
 }
 @media(max-width:470px){
   .facts{grid-template-columns:1fr}
@@ -135,8 +123,7 @@ main:focus{outline:none}
   .gallery{padding-bottom:54px}
   .cover h1{font-size:clamp(46px,13vw,64px)}
   .cover .intro{font-size:17px}
-  .hint{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important}
+  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }

@@ -4,30 +4,32 @@
 const whatsappNumber = '';
 
 const cover = document.querySelector('#cover');
-const gate = document.querySelector('#gate');
-const openLink = document.querySelector('#open');
+const openButton = document.querySelector('#open');
 const replayLink = document.querySelector('#replay');
 const invitation = document.querySelector('#invitation');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const creak = new Audio('assets/son-porte.mp3');
+creak.preload = 'auto';
 let revealTimer;
 
 function openInvitation(event) {
   if (event) event.preventDefault();
   if (cover.classList.contains('is-open')) return;
   cover.classList.add('is-open');
+  creak.currentTime = 0;
+  creak.play().catch(() => {}); // le son est un bonus : l'ouverture ne dépend pas de lui
   clearTimeout(revealTimer);
   revealTimer = setTimeout(() => {
     invitation.focus({preventScroll: true});
     invitation.scrollIntoView();
-  }, reducedMotion.matches ? 0 : 520);
+  }, reducedMotion.matches ? 0 : 950);
 }
 
-gate.addEventListener('click', openInvitation);
-openLink.addEventListener('click', openInvitation);
+openButton.addEventListener('click', openInvitation);
 replayLink.addEventListener('click', () => {
   clearTimeout(revealTimer);
   cover.classList.remove('is-open');
-  gate.focus({preventScroll: true});
+  openButton.focus({preventScroll: true});
 });
 
 // Compte à rebours discret vers la cérémonie (19 juin 2027, 19h00).

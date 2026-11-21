@@ -2,13 +2,13 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#16251d">
+<meta name="theme-color" content="#12211a">
 <meta name="description" content="دعوة زفاف ليلى وآدم — أمسية أندلسية في دار الياسمين بتطوان، السبت ١٩ يونيو ٢٠٢٧.">
 <meta property="og:title" content="ليلى وآدم | دعوة زفاف">
 <meta property="og:description" content="بين الأقواس والياسمين — السبت ١٩ يونيو ٢٠٢٧، دار الياسمين، تطوان.">
-<meta property="og:image" content="/assets/patio.jpg">
+<meta property="og:image" content="/assets/porte-fermee.jpg">
 <title>ليلى وآدم | دعوة زفاف</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2316251d'/%3E%3Cpath d='M16 5l7 9v13H9V14z' fill='none' stroke='%23e7c78e' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23122119'/%3E%3Cpath d='M16 5l7 9v13H9V14z' fill='none' stroke='%23e7c78e' stroke-width='1.6'/%3E%3C/svg%3E">
 <link rel="preload" href="assets/amiri.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 <script src="app.js" defer></script>
@@ -17,26 +17,23 @@
 <a class="skip" href="#invitation">انتقل إلى الدعوة</a>
 
 <header class="cover" id="cover">
-  <div class="cover-bg" aria-hidden="true"></div>
+  <div class="door-layer closed" aria-hidden="true"></div>
+  <div class="door-layer open" id="doorOpen" aria-hidden="true"></div>
+  <div class="cover-shade" aria-hidden="true"></div>
   <div class="cover-frame" aria-hidden="true"></div>
+
   <div class="top"><span class="monogram" aria-hidden="true">ل · آ</span><span>دعوة خاصة <i aria-hidden="true"></i> ٢٠٢٧</span></div>
 
   <div class="cover-content">
     <p class="eyebrow">أمسية أندلسية</p>
     <h1>ليلى <em>و</em> آدم</h1>
     <p class="intro">بين الأقواس والياسمين</p>
-
-    <button class="gate" id="gate" type="button" aria-label="افتحوا الباب لعرض الدعوة">
-      <div class="gate-light" aria-hidden="true"><span>دار الياسمين</span></div>
-      <div class="leaf" data-side="left" aria-hidden="true"><div class="surface"></div></div>
-      <div class="leaf" data-side="right" aria-hidden="true"><div class="surface"></div></div>
-      <div class="gate-ring" aria-hidden="true"></div>
-    </button>
-
     <p class="cover-date">السبت، ١٩ يونيو ٢٠٢٧ <b aria-hidden="true">·</b> تطوان</p>
-    <a class="btn primary" id="open" href="#invitation">افتحوا الدعوة <span class="chev" aria-hidden="true">↓</span></a>
-    <p class="hint">اضغطوا على الباب أو على الزر</p>
   </div>
+
+  <button class="door-hit" id="open" type="button" aria-label="اضغطوا لفتح الباب وعرض الدعوة">
+    <span class="open-hint">اضغطوا لفتح الباب <i class="chev" aria-hidden="true">✦</i></span>
+  </button>
 
   <div class="bottom"><span>دار الياسمين</span><span>المغرب</span></div>
 </header>
@@ -116,11 +113,11 @@
   <a href="#cover" id="replay">العودة إلى الغلاف ↑</a>
   <details>
     <summary>مصادر الصور والخط</summary>
+    <span>صورتا البابين مولّدتان بالذكاء الاصطناعي خصيصًا لهذه الدعوة</span>
     <a href="https://pxhere.com/en/photo/145939" target="_blank" rel="noopener">الفناء — PxHere</a>
     <a href="https://picryl.com/media/alhambra-source-andalusia-7d73c8" target="_blank" rel="noopener">الحديقة — PICRYL</a>
     <a href="https://www.rawpixel.com/image/3340602/free-photo-image-garden-fountain" target="_blank" rel="noopener">الممرّ — Rawpixel</a>
-    <a href="https://picryl.com/media/inside-door-from-a-mausoleum-signed-by-master-rostam-son-of-master-haji-najjar-16504a" target="_blank" rel="noopener">الباب المنقوش — PICRYL</a>
-    <span>الخط: Amiri (رخصة OFL)</span>
+    <span>الخط: Amiri (رخصة OFL) — صوت الباب: مؤثر مولّد</span>
   </details>
 </footer>
 </body>
